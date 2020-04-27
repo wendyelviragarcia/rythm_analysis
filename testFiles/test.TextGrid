@@ -1,0 +1,506 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 16.068208616780044 
+tiers? <exists> 
+size = 1 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "silences" 
+        xmin = 0 
+        xmax = 16.068208616780044 
+        intervals: size = 123 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.8368497023260492 
+            text = "" 
+        intervals [2]:
+            xmin = 0.8368497023260492 
+            xmax = 0.8981043083900225 
+            text = "PTK" 
+        intervals [3]:
+            xmin = 0.8981043083900225 
+            xmax = 0.9743600450728269 
+            text = "a" 
+        intervals [4]:
+            xmin = 0.9743600450728269 
+            xmax = 1.0501043083900226 
+            text = "PTK" 
+        intervals [5]:
+            xmin = 1.0501043083900226 
+            xmax = 1.1390702358354508 
+            text = "a" 
+        intervals [6]:
+            xmin = 1.1390702358354508 
+            xmax = 1.2433363198961944 
+            text = "PTK" 
+        intervals [7]:
+            xmin = 1.2433363198961944 
+            xmax = 1.2916916052576988 
+            text = "a" 
+        intervals [8]:
+            xmin = 1.2916916052576988 
+            xmax = 1.3929354839833483 
+            text = "PTK" 
+        intervals [9]:
+            xmin = 1.3929354839833483 
+            xmax = 1.4564017960203226 
+            text = "a" 
+        intervals [10]:
+            xmin = 1.4564017960203226 
+            xmax = 1.5485790587406902 
+            text = "PTK" 
+        intervals [11]:
+            xmin = 1.5485790587406902 
+            xmax = 1.6377341161259638 
+            text = "a" 
+        intervals [12]:
+            xmin = 1.6377341161259638 
+            xmax = 1.7435113028542544 
+            text = "p" 
+        intervals [13]:
+            xmin = 1.7435113028542544 
+            xmax = 1.8402218735772629 
+            text = "a" 
+        intervals [14]:
+            xmin = 1.8402218735772629 
+            xmax = 2.032131912355733 
+            text = "SIL" 
+        intervals [15]:
+            xmin = 2.032131912355733 
+            xmax = 2.1141043083900226 
+            text = "p" 
+        intervals [16]:
+            xmin = 2.1141043083900226 
+            xmax = 2.214975335128921 
+            text = "a" 
+        intervals [17]:
+            xmin = 2.214975335128921 
+            xmax = 2.338104308390023 
+            text = "t" 
+        intervals [18]:
+            xmin = 2.338104308390023 
+            xmax = 2.4661043083900225 
+            text = "a" 
+        intervals [19]:
+            xmin = 2.4661043083900225 
+            xmax = 2.5701043083900226 
+            text = "k" 
+        intervals [20]:
+            xmin = 2.5701043083900226 
+            xmax = 2.6741043083900227 
+            text = "a" 
+        intervals [21]:
+            xmin = 2.6741043083900227 
+            xmax = 2.802104308390023 
+            text = "PTK" 
+        intervals [22]:
+            xmin = 2.802104308390023 
+            xmax = 2.8902283639475277 
+            text = "a" 
+        intervals [23]:
+            xmin = 2.8902283639475277 
+            xmax = 2.9944944480082714 
+            text = "PTK" 
+        intervals [24]:
+            xmin = 2.9944944480082714 
+            xmax = 3.0912050187312796 
+            text = "a" 
+        intervals [25]:
+            xmin = 3.0912050187312796 
+            xmax = 3.1941043083900227 
+            text = "PTK" 
+        intervals [26]:
+            xmin = 3.1941043083900227 
+            xmax = 3.304270494855408 
+            text = "a" 
+        intervals [27]:
+            xmin = 3.304270494855408 
+            xmax = 3.4341043083900225 
+            text = "PTK" 
+        intervals [28]:
+            xmin = 3.4341043083900225 
+            xmax = 3.5170669678482134 
+            text = "a" 
+        intervals [29]:
+            xmin = 3.5170669678482134 
+            xmax = 3.615288641238769 
+            text = "PTK" 
+        intervals [30]:
+            xmin = 3.615288641238769 
+            xmax = 3.689332671948572 
+            text = "a" 
+        intervals [31]:
+            xmin = 3.689332671948572 
+            xmax = 3.802104308390023 
+            text = "PTK" 
+        intervals [32]:
+            xmin = 3.802104308390023 
+            xmax = 3.9084425587428884 
+            text = "a" 
+        intervals [33]:
+            xmin = 3.9084425587428884 
+            xmax = 4.034104308390022 
+            text = "PTK" 
+        intervals [34]:
+            xmin = 4.034104308390022 
+            xmax = 4.110930316194187 
+            text = "a" 
+        intervals [35]:
+            xmin = 4.110930316194187 
+            xmax = 4.224263016260213 
+            text = "PTK" 
+        intervals [36]:
+            xmin = 4.224263016260213 
+            xmax = 4.322104308390022 
+            text = "a" 
+        intervals [37]:
+            xmin = 4.322104308390022 
+            xmax = 4.418104308390022 
+            text = "PTK" 
+        intervals [38]:
+            xmin = 4.418104308390022 
+            xmax = 4.549150089782819 
+            text = "a" 
+        intervals [39]:
+            xmin = 4.549150089782819 
+            xmax = 4.690104308390023 
+            text = "PTK" 
+        intervals [40]:
+            xmin = 4.690104308390023 
+            xmax = 4.7625845881937225 
+            text = "a" 
+        intervals [41]:
+            xmin = 4.7625845881937225 
+            xmax = 4.866850672254466 
+            text = "PTK" 
+        intervals [42]:
+            xmin = 4.866850672254466 
+            xmax = 4.94542801096691 
+            text = "a" 
+        intervals [43]:
+            xmin = 4.94542801096691 
+            xmax = 5.055738505697842 
+            text = "PTK" 
+        intervals [44]:
+            xmin = 5.055738505697842 
+            xmax = 5.146404665750662 
+            text = "a" 
+        intervals [45]:
+            xmin = 5.146404665750662 
+            xmax = 5.271826187157064 
+            text = "PTK" 
+        intervals [46]:
+            xmin = 5.271826187157064 
+            xmax = 5.3473813205344145 
+            text = "a" 
+        intervals [47]:
+            xmin = 5.3473813205344145 
+            xmax = 5.448625199260063 
+            text = "PTK" 
+        intervals [48]:
+            xmin = 5.448625199260063 
+            xmax = 5.5461043083900226 
+            text = "a" 
+        intervals [49]:
+            xmin = 5.5461043083900226 
+            xmax = 5.6501043083900235 
+            text = "PTK" 
+        intervals [50]:
+            xmin = 5.6501043083900235 
+            xmax = 5.735734706093995 
+            text = "a" 
+        intervals [51]:
+            xmin = 5.735734706093995 
+            xmax = 5.850104308390023 
+            text = "PTK" 
+        intervals [52]:
+            xmin = 5.850104308390023 
+            xmax = 5.927644744872465 
+            text = "a" 
+        intervals [53]:
+            xmin = 5.927644744872465 
+            xmax = 6.034104308390022 
+            text = "PTK" 
+        intervals [54]:
+            xmin = 6.034104308390022 
+            xmax = 6.144067883580483 
+            text = "a" 
+        intervals [55]:
+            xmin = 6.144067883580483 
+            xmax = 6.266104308390023 
+            text = "PTK" 
+        intervals [56]:
+            xmin = 6.266104308390023 
+            xmax = 6.348066743699329 
+            text = "a" 
+        intervals [57]:
+            xmin = 6.348066743699329 
+            xmax = 6.4821043083900225 
+            text = "PTK" 
+        intervals [58]:
+            xmin = 6.4821043083900225 
+            xmax = 6.6021043083900235 
+            text = "a" 
+        intervals [59]:
+            xmin = 6.6021043083900235 
+            xmax = 6.73642012925891 
+            text = "PTK" 
+        intervals [60]:
+            xmin = 6.73642012925891 
+            xmax = 6.878463780008329 
+            text = "a" 
+        intervals [61]:
+            xmin = 6.878463780008329 
+            xmax = 7.0008630960796365 
+            text = "PTK" 
+        intervals [62]:
+            xmin = 7.0008630960796365 
+            xmax = 7.154995568169431 
+            text = "a" 
+        intervals [63]:
+            xmin = 7.154995568169431 
+            xmax = 7.298104308390023 
+            text = "PTK" 
+        intervals [64]:
+            xmin = 7.298104308390023 
+            xmax = 7.403823453352015 
+            text = "a" 
+        intervals [65]:
+            xmin = 7.403823453352015 
+            xmax = 7.539822693431245 
+            text = "PTK" 
+        intervals [66]:
+            xmin = 7.539822693431245 
+            xmax = 7.696977370856134 
+            text = "a" 
+        intervals [67]:
+            xmin = 7.696977370856134 
+            xmax = 7.802104308390023 
+            text = "PTK" 
+        intervals [68]:
+            xmin = 7.802104308390023 
+            xmax = 7.9795535696874245 
+            text = "a" 
+        intervals [69]:
+            xmin = 7.9795535696874245 
+            xmax = 8.122104308390023 
+            text = "PTK" 
+        intervals [70]:
+            xmin = 8.122104308390023 
+            xmax = 8.274104308390022 
+            text = "a" 
+        intervals [71]:
+            xmin = 8.274104308390022 
+            xmax = 9.023523736472539 
+            text = "SIL" 
+        intervals [72]:
+            xmin = 9.023523736472539 
+            xmax = 9.106104308390023 
+            text = "p" 
+        intervals [73]:
+            xmin = 9.106104308390023 
+            xmax = 9.19427833790535 
+            text = "a" 
+        intervals [74]:
+            xmin = 9.19427833790535 
+            xmax = 9.298104308390021 
+            text = "t" 
+        intervals [75]:
+            xmin = 9.298104308390021 
+            xmax = 9.418104308390022 
+            text = "a" 
+        intervals [76]:
+            xmin = 9.418104308390022 
+            xmax = 9.514104308390023 
+            text = "k" 
+        intervals [77]:
+            xmin = 9.514104308390023 
+            xmax = 9.642104308390023 
+            text = "a" 
+        intervals [78]:
+            xmin = 9.642104308390023 
+            xmax = 9.770104308390023 
+            text = "PTK" 
+        intervals [79]:
+            xmin = 9.770104308390023 
+            xmax = 9.874104308390022 
+            text = "a" 
+        intervals [80]:
+            xmin = 9.874104308390022 
+            xmax = 9.978104308390023 
+            text = "PTK" 
+        intervals [81]:
+            xmin = 9.978104308390023 
+            xmax = 10.114104308390022 
+            text = "a" 
+        intervals [82]:
+            xmin = 10.114104308390022 
+            xmax = 10.218104308390023 
+            text = "PTK" 
+        intervals [83]:
+            xmin = 10.218104308390023 
+            xmax = 10.410104308390022 
+            text = "a" 
+        intervals [84]:
+            xmin = 10.410104308390022 
+            xmax = 10.674104308390023 
+            text = "PTK" 
+        intervals [85]:
+            xmin = 10.674104308390023 
+            xmax = 10.747624074109233 
+            text = "a" 
+        intervals [86]:
+            xmin = 10.747624074109233 
+            xmax = 10.842104308390022 
+            text = "PTK" 
+        intervals [87]:
+            xmin = 10.842104308390022 
+            xmax = 10.965222858236002 
+            text = "a" 
+        intervals [88]:
+            xmin = 10.965222858236002 
+            xmax = 11.082104308390022 
+            text = "PTK" 
+        intervals [89]:
+            xmin = 11.082104308390022 
+            xmax = 11.234104308390023 
+            text = "a" 
+        intervals [90]:
+            xmin = 11.234104308390023 
+            xmax = 11.378104308390022 
+            text = "PTK" 
+        intervals [91]:
+            xmin = 11.378104308390022 
+            xmax = 11.468420046529156 
+            text = "a" 
+        intervals [92]:
+            xmin = 11.468420046529156 
+            xmax = 11.578104308390023 
+            text = "PTK" 
+        intervals [93]:
+            xmin = 11.578104308390023 
+            xmax = 11.690104308390023 
+            text = "a" 
+        intervals [94]:
+            xmin = 11.690104308390023 
+            xmax = 11.794104308390022 
+            text = "PTK" 
+        intervals [95]:
+            xmin = 11.794104308390022 
+            xmax = 11.930104308390023 
+            text = "a" 
+        intervals [96]:
+            xmin = 11.930104308390023 
+            xmax = 12.075782237507122 
+            text = "" 
+        intervals [97]:
+            xmin = 12.075782237507122 
+            xmax = 12.154104308390023 
+            text = "" 
+        intervals [98]:
+            xmin = 12.154104308390023 
+            xmax = 12.234104308390023 
+            text = "a" 
+        intervals [99]:
+            xmin = 12.234104308390023 
+            xmax = 12.314104308390023 
+            text = "PTK" 
+        intervals [100]:
+            xmin = 12.314104308390023 
+            xmax = 12.402104308390022 
+            text = "a" 
+        intervals [101]:
+            xmin = 12.402104308390022 
+            xmax = 12.490104308390022 
+            text = "PTK" 
+        intervals [102]:
+            xmin = 12.490104308390022 
+            xmax = 12.610104308390023 
+            text = "a" 
+        intervals [103]:
+            xmin = 12.610104308390023 
+            xmax = 12.754104308390023 
+            text = "PTK" 
+        intervals [104]:
+            xmin = 12.754104308390023 
+            xmax = 12.834104308390023 
+            text = "a" 
+        intervals [105]:
+            xmin = 12.834104308390023 
+            xmax = 12.938104308390022 
+            text = "PTK" 
+        intervals [106]:
+            xmin = 12.938104308390022 
+            xmax = 13.018104308390022 
+            text = "a" 
+        intervals [107]:
+            xmin = 13.018104308390022 
+            xmax = 13.122104308390023 
+            text = "PTK" 
+        intervals [108]:
+            xmin = 13.122104308390023 
+            xmax = 13.266104308390023 
+            text = "a" 
+        intervals [109]:
+            xmin = 13.266104308390023 
+            xmax = 13.466104308390022 
+            text = "PTK" 
+        intervals [110]:
+            xmin = 13.466104308390022 
+            xmax = 13.538104308390022 
+            text = "a" 
+        intervals [111]:
+            xmin = 13.538104308390022 
+            xmax = 13.626104308390023 
+            text = "PTK" 
+        intervals [112]:
+            xmin = 13.626104308390023 
+            xmax = 13.706104308390023 
+            text = "a" 
+        intervals [113]:
+            xmin = 13.706104308390023 
+            xmax = 13.802104308390023 
+            text = "PTK" 
+        intervals [114]:
+            xmin = 13.802104308390023 
+            xmax = 13.866104308390023 
+            text = "a" 
+        intervals [115]:
+            xmin = 13.866104308390023 
+            xmax = 13.986104308390022 
+            text = "PTK" 
+        intervals [116]:
+            xmin = 13.986104308390022 
+            xmax = 14.074104308390023 
+            text = "a" 
+        intervals [117]:
+            xmin = 14.074104308390023 
+            xmax = 14.170104308390023 
+            text = "PTK" 
+        intervals [118]:
+            xmin = 14.170104308390023 
+            xmax = 14.266104308390023 
+            text = "a" 
+        intervals [119]:
+            xmin = 14.266104308390023 
+            xmax = 14.370104308390022 
+            text = "PTK" 
+        intervals [120]:
+            xmin = 14.370104308390022 
+            xmax = 14.429643268658642 
+            text = "a" 
+        intervals [121]:
+            xmin = 14.429643268658642 
+            xmax = 14.514104308390023 
+            text = "PTK" 
+        intervals [122]:
+            xmin = 14.514104308390023 
+            xmax = 14.610104308390023 
+            text = "a" 
+        intervals [123]:
+            xmin = 14.610104308390023 
+            xmax = 16.068208616780044 
+            text = "" 
