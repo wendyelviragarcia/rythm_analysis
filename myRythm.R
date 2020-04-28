@@ -56,7 +56,9 @@ ui <- fluidPage(
       h4("Graphs"),
       plotOutput("plot1"),
       plotOutput("plot2"),
-      plotOutput("plot3")
+      plotOutput("plot3"),
+      plotOutput("plot4")
+      
       
       
     )
@@ -83,7 +85,7 @@ server <- function(input, output) {
         nFiles<- length(input$file1$datapath)
         files<- input$file1$datapath
         
-        df<- data.frame("file"= c(1:length(files)),"speechRate"=c(1:length(files)),"PerV"=c(1:length(files)),"PerC"=c(1:length(files)),"VarcoV"=c(1:length(files)),"VarcoC"=c(1:length(files)),"DeltaV"=c(1:length(files)),"DeltaC"=c(1:length(files)) )
+        df<- data.frame("file"= c(1:length(files)),"speechRate"=c(1:length(files)),"PerV"=c(1:length(files)),"PerC"=c(1:length(files)),"VarcoV"=c(1:length(files)),"VarcoC"=c(1:length(files)),"DeltaV"=c(1:length(files)),"DeltaC"=c(1:length(files)),"VrPVI"=c(1:length(files)), "CrPVI"=c(1:length(files)),"VnPVI"=c(1:length(files)) )
         loopIndex<- 0
         for (loopIndex in 1:nFiles){
           #for (file in files) {
@@ -93,7 +95,8 @@ server <- function(input, output) {
           textgrid$text[textgrid$text=="PTK"] <- "C"
           textgrid$text[textgrid$text=="a"] <- "V"
           
-          textgrid$duration<-(textgrid$xmax-textgrid$xmin)
+          #computes dur in ms for comparison purposes with other metrics (Arvaniti 2011)
+          textgrid$duration<-(textgrid$xmax-textgrid$xmin)*1000
           textGridNonSilent<-textgrid[textgrid$text!="",]
           speechTime<-sum(textGridNonSilent$duration)
           
@@ -103,12 +106,15 @@ server <- function(input, output) {
           nCons =unname(frequ[names(frequ)=="C"])
           nVows =unname(frequ[names(frequ)=="V"])
           speechRate= (nCons+nVows)/speechTime
-          PercentageV = vowelTime/speechTime
-          PercentageC = consonantTime/speechTime
-          varcoC=sd(textgrid[textgrid$text=="C",]$duration)/mean(textgrid[textgrid$text=="C",]$duration)
-          varcoV= sd(textgrid[textgrid$text=="V",]$duration)/mean(textgrid[textgrid$text=="V",]$duration)
+          PercentageV = (vowelTime/speechTime)*100
+          PercentageC = (consonantTime/speechTime)*100
           deltaC <- sd(textgrid[textgrid$text=="C",]$duration)
           deltaV <- sd(textgrid[textgrid$text=="V",]$duration)
+          
+          #VarcoC=100*DC/meanC (Dellwo 2006)
+          varcoC=100*deltaC/mean(textgrid[textgrid$text=="C",]$duration)
+          varcoV= 100*deltaV/mean(textgrid[textgrid$text=="V",]$duration)
+          
           
           df[loopIndex,1 ]<- textgrid$file[1]
           df[loopIndex,2]<- speechRate
@@ -118,6 +124,56 @@ server <- function(input, output) {
           df[loopIndex,6]<- varcoC
           df[loopIndex,7]<- deltaV
           df[loopIndex,8]<- deltaC
+          
+          #compute the rPVI  FOR VOWELS
+          
+          #compute the rPVI  FOR VOWELS
+          
+          myA<- which(textgrid$text=="V" )
+          myC<- which(textgrid$text=="C")
+          # Check if all vowel intervals have a C afterwards
+          expectedC<- myA+1
+          checkingC <- expectedC %in% myC
+          haveCafter= data.frame(myA,checkingC)
+          myA<- haveCafter$myA[haveCafter$checking==TRUE]
+          
+          indexA <-0
+          difsA <- rep(NA, length(myA))
+          for (A in myA){
+            indexA=indexA+1
+            difsA[indexA] <- abs(textgrid$duration[A]-textgrid$duration[A+1])
+          }
+          #difsCA ready for further analisys compute
+          # rPVI
+          VrPVI<- mean(difsA)
+          df[loopIndex,9]<- VrPVI
+          
+          # compute nPVI 
+          # It computes the difference between the duration of each vocalic interval 
+          # and the one the follows then divides it by the average duration of all vocalic intervals. 
+          # The mean of the values obtained is computed and finally multiplied by 100. 
+          denom<- mean(textgrid$duration[textgrid$text=="V"] )
+          VnPVI<- 100*(mean(difsA/denom))
+          df[loopIndex,11]<- VnPVI
+          
+          ## compute the rPVI  FOR CONSONANTS
+          # Check if all C intervals have a vowel afterwards
+          expectedA<- myC+1
+          checkingA <- expectedA %in% myA
+          haveAafter= data.frame(myC,checkingA)
+          myC<- haveAafter$myC[haveAafter$checking==TRUE]
+          
+          indexC <-0
+          difsC <- rep(NA, length(myC))
+          for (C in myC){
+            indexC=indexC+1
+            difsC[indexC] <- abs(textgrid$duration[C]-textgrid$duration[C+1])
+          }
+          
+          #difsC ready for further analisys
+          CrPVI<- mean(difsC)
+          df[loopIndex,10]<- CrPVI
+          
         }
         
         #df creado y completo
@@ -141,21 +197,43 @@ server <- function(input, output) {
                     ymax = max(DeltaV),
                     ymean = mean(DeltaV))
         
+        df.summary.VnPVI <- df %>% group_by(file) %>%
+          summarize(ymin = min(VnPVI),
+                    ymax = max(VnPVI),
+                    ymean = mean(VnPVI))
+        
+        df.summary.CrPVI <- df %>% group_by(file) %>%
+          summarize(ymin = min(CrPVI),
+                    ymax = max(CrPVI),
+                    ymean = mean(CrPVI))
+        
+        
+        
         output$plot1 <- renderPlot({
+          ggplot(data = df,aes(x = CrPVI, y = VnPVI, colour = file)) +
+            geom_point()+
+            labs(subtitle="Consonantal raw PVI by Vocalic normalized PVI", 
+                 y="VnPVI", 
+                 x="CrPVI", 
+                 title="CrPVI by VnPVI", 
+                 caption = "Metric Grabe & Low (2002)")
+        }) 
+        
+        output$plot2 <- renderPlot({
           ggplot(data = df,aes(x = VarcoV, y = PerV, colour = file)) +
             geom_point()+
             geom_errorbar(aes(ymin = df.summary.PV$ymin, ymax = df.summary.PV$ymax))+
             geom_errorbarh(aes(xmin = df.summary.VV$ymin,xmax = df.summary.VV$ymax))+
             labs(subtitle="%V/varcoV",
                  y="%V", 
-                 x="varcoV", 
+                 x="VarcoV", 
                  title="%V/varcoV by file", 
                  caption = "GNU. Made with www.wendyelvira.ga ")
         }) 
         
         
         
-        output$plot2 <- renderPlot({
+        output$plot3 <- renderPlot({
           ggplot(data = df,aes(x = PerV, y = DeltaC, colour = file)) +
             geom_point()+
             geom_errorbar(aes(ymin = df.summary.DC$ymin, ymax = df.summary.DC$ymin))+
@@ -169,7 +247,7 @@ server <- function(input, output) {
         }) 
         
         
-        output$plot3 <- renderPlot({
+        output$plot4 <- renderPlot({
           ggplot(data = df,aes(x = DeltaV, y = DeltaC, colour = file)) +
             geom_point()+
             geom_errorbar(aes(ymin = df.summary.DC$ymin, ymax = df.summary.DC$ymin))+
