@@ -1,5 +1,74 @@
-# Define server logic to read selected file ----
+####
+# shyny app for rythm metrics computing and display
+####
+library(shiny)
+library(readtextgrid)
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
 
+
+options(shiny.maxRequestSize=30*1024^2) 
+
+# Define UI for data upload app ----
+ui <- fluidPage(
+  
+  # App title ----
+  titlePanel("Compute files rythm"),
+  
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(width = 3,
+      
+      # Input: Select a file ----
+      fileInput("file1", "Choose your TextGrids. They must have C and V labelled intervals",
+                multiple = TRUE),
+      
+      # Horizontal line ----
+      
+      
+      
+      
+      # Horizontal line ----
+      tags$hr(),
+      
+      # Input: Select number of rows to display ----
+      checkboxGroupInput("disp", "Metrics",
+                   choices = c(SpeechRate = "SpeechRate", PercentageConsonants = "PercentageConsonants",
+                               PercentageVowel = "PercentageVowel", VarcoV="Varco", VarcoC = "VarcoC"),
+                   selected = c("SpeechRate","PercentageVowel","PercentageConsonants")),
+      
+      tags$hr(),
+      # Input: Select number of rows to display ----
+      checkboxGroupInput("disp", "Graphs",
+                         choices = c(PerV = "PerV", Varcos = "Varcos",
+                                     Deltas = "Deltas"),
+                         selected = c("PerV","Varcos","PercentageConsonants")),
+      
+    ),
+    
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: Data file ----
+      h4("Numeric Results"),
+      tableOutput("contents"),
+      h4("Graphs"),
+      plotOutput("plot1"),
+      plotOutput("plot2"),
+      plotOutput("plot3"),
+      plotOutput("plot4")
+      
+      
+      
+    )
+    
+  )
+)
+
+# Define server logic to read selected file ----
 server <- function(input, output) {
   #options(shiny.maxRequestSize=30*1024^2) 
   output$contents <- renderTable({
@@ -258,3 +327,6 @@ server <- function(input, output) {
   })
   
 }
+
+# Create Shiny app ----
+shinyApp(ui, server)
