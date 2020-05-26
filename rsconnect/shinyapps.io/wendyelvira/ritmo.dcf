@@ -5,9 +5,9 @@ account: wendyelvira
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2184995
-bundleId: 3081556
+bundleId: 3192202
 url: https://wendyelvira.shinyapps.io/ritmo/
-when: 1588169417.94905
+when: 1590517293.33155
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .gitattributes|OLD_myRythm.R|README.md|testFiles/test.TextGrid|testFiles/test2.TextGrid|testFiles/test3.TextGrid|testFiles/test4.TextGrid
+ignoredFiles: .gitattributes|Captura de pantalla 2020-04-24 a las 19.27.31.png|OLD_myRythm.R|testFiles/test.TextGrid|testFiles/test2.TextGrid|testFiles/test3.TextGrid|testFiles/test4.TextGrid

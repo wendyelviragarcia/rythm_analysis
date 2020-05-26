@@ -44,7 +44,10 @@ ui <- fluidPage(
       plotOutput("plot1"),
       plotOutput("plot2"),
       plotOutput("plot3"),
-      plotOutput("plot4")
+      plotOutput("plot4"),
+      plotOutput("plot5"),
+      plotOutput("plot6"),
+      plotOutput("plot7")
       
       
       

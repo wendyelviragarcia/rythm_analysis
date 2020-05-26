@@ -1,4 +1,17 @@
 # Define server logic to read selected file ----
+####
+# shyny app for rythm metrics computing and display
+####
+library(shiny)
+library(readtextgrid)
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(factoextra)
+library(FactoMineR)
+
+
+options(shiny.maxRequestSize=30*1024^2) 
 
 server <- function(input, output) {
   #options(shiny.maxRequestSize=30*1024^2) 
@@ -18,7 +31,7 @@ server <- function(input, output) {
         nFiles<- length(input$file1$datapath)
         files<- input$file1$datapath
         
-        df<- data.frame("file"= c(1:length(files)),"speechRate"=c(1:length(files)),"PerV"=c(1:length(files)),"PerC"=c(1:length(files)),"VarcoV"=c(1:length(files)),"VarcoC"=c(1:length(files)),"DeltaV"=c(1:length(files)),"DeltaC"=c(1:length(files)),"VrPVI"=c(1:length(files)), "CrPVI"=c(1:length(files)),"VnPVI"=c(1:length(files)) )
+        df<- data.frame("file"= c(1:length(files)),"speechRate"=c(1:length(files)),"PerV"=c(1:length(files)),"PerC"=c(1:length(files)),"VarcoV"=c(1:length(files)),"VarcoC"=c(1:length(files)),"DeltaV"=c(1:length(files)),"DeltaC"=c(1:length(files)),"VrPVI"=c(1:length(files)), "CrPVI"=c(1:length(files)),"VnPVI"=c(1:length(files)),"speechTimeSecs"=c(1:length(files)) )
         allC <- data.frame("file"=character(0),"durationC"=numeric(0))
         allV <- data.frame("file"=character(0),"durationA"=numeric(0))
         
@@ -72,6 +85,7 @@ server <- function(input, output) {
           df[loopIndex,6]<- varcoC
           df[loopIndex,7]<- deltaV
           df[loopIndex,8]<- deltaC
+          df[loopIndex,12]<- speechTime/1000
           
           #compute the rPVI  FOR VOWELS
           
@@ -126,11 +140,45 @@ server <- function(input, output) {
         
         #df creado y completo
         # df
+        df$file<- as.factor(df$file)
+        
         # allC
         # allV
         
+        datos= data.frame( df[,2:11], row.names =df$file )
         
-        df.summary.PV <- df %>% group_by(file) %>%
+        res.pca <- PCA(datos, ncp = 2, graph = FALSE)
+        if (nFiles>2){
+          res.hcpc <- HCPC(res.pca, graph = FALSE)
+          
+          output$plot6 <- renderPlot({
+            fviz_dend(res.hcpc, 
+                      cex = 0.7,                     # Label size
+                      palette = "jco",               # Color palette see ?ggpubr::ggpar
+                      rect = TRUE, rect_fill = TRUE, # Add rectangle around groups
+                      rect_border = "jco",           # Rectangle color
+                      labels_track_height = 0.8      # Augment the room for labels
+            )
+          })
+          
+          
+          output$plot7 <- renderPlot({
+            fviz_cluster(res.hcpc,
+                         repel = TRUE,            # Avoid label overlapping
+                         show.clust.cent = TRUE, # Show cluster centers
+                         palette = "jco",         # Color palette see ?ggpubr::ggpar
+                         ggtheme = theme_minimal(),
+                         main = "Factor map"
+            )
+          })
+          
+          
+          
+          
+        }
+        
+        
+        df.summary.PV <- df %>%group_by(file) %>%
           summarize(ymin = min(PerV),
                     ymax = max(PerV),
                     ymean = mean(PerV))
@@ -186,6 +234,8 @@ server <- function(input, output) {
           
         }) 
         
+        
+        
         output$plot5 <- renderPlot({
           ggplot(data = df,aes(x = CrPVI, y = VnPVI, colour = file)) +
             geom_point()+
@@ -199,8 +249,8 @@ server <- function(input, output) {
         output$plot2 <- renderPlot({
           ggplot(data = df,aes(x = VarcoV, y = PerV, colour = file)) +
             geom_point()+
-            geom_errorbar(aes(ymin = df.summary.PV$ymin, ymax = df.summary.PV$ymax))+
-            geom_errorbarh(aes(xmin = df.summary.VV$ymin,xmax = df.summary.VV$ymax))+
+            #geom_errorbar(aes(ymin = df.summary.VV$ymin, ymax = df.summary.VV$ymax))+
+            #geom_errorbarh(aes(xmin = df.summary.PV$ymin,xmax = df.summary.PV$ymax))+
             labs(subtitle="%V/varcoV",
                  y="%V", 
                  x="VarcoV", 
@@ -213,9 +263,6 @@ server <- function(input, output) {
         output$plot3 <- renderPlot({
           ggplot(data = df,aes(x = PerV, y = DeltaC, colour = file)) +
             geom_point()+
-            geom_errorbar(aes(ymin = df.summary.DC$ymin, ymax = df.summary.DC$ymin))+
-            geom_errorbarh(aes(xmin = df.summary.PV$ymin, xmax = df.summary.PV$ymax))+
-            
             labs(subtitle="%V/∆C", 
                  y="∆C", 
                  x="%V", 
@@ -227,16 +274,12 @@ server <- function(input, output) {
         output$plot4 <- renderPlot({
           ggplot(data = df,aes(x = DeltaV, y = DeltaC, colour = file)) +
             geom_point()+
-            geom_errorbar(aes(ymin = df.summary.DC$ymin, ymax = df.summary.DC$ymin))+
-            geom_errorbarh(aes(xmin = df.summary.DV$ymin,xmax = df.summary.DV$ymax))+
             labs(subtitle="∆V/∆C", 
                  y="∆C", 
                  x="∆V",  
                  title="∆V/∆C", 
                  caption = "GNU. Made with www.wendyelvira.ga ")
         }) 
-        
-        
         
         
         
