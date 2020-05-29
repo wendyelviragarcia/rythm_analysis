@@ -77,10 +77,10 @@ server <- function(input, output) {
           varcoV= 100*deltaV/mean(textgrid[textgrid$text=="V",]$duration)
           
           
-          df[loopIndex,1 ]<- fileName
-          df[loopIndex,2]<- speechRate
-          df[loopIndex,3]<- PercentageV
-          df[loopIndex,4]<- PercentageC
+          df[loopIndex,"file" ]<- fileName
+          df[loopIndex,"speechRate"]<- speechRate
+          df[loopIndex,"PerV"]<- PercentageV
+          df[loopIndex,"PerC"]<- PercentageC
           df[loopIndex,5]<- varcoV
           df[loopIndex,6]<- varcoC
           df[loopIndex,7]<- deltaV
@@ -147,9 +147,11 @@ server <- function(input, output) {
         
         datos= data.frame( df[,2:11], row.names =df$file )
         
-        res.pca <- PCA(datos, ncp = 2, graph = FALSE)
+        res.pca <- PCA(datos, ncp = 3, graph = FALSE)
+        maxClus=length(res.pca$eig)
+        
         if (nFiles>2){
-          res.hcpc <- HCPC(res.pca, graph = FALSE)
+          res.hcpc <- HCPC(res.pca, max=maxClus, graph = FALSE)
           
           output$plot6 <- renderPlot({
             fviz_dend(res.hcpc, 
