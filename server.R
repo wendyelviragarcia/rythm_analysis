@@ -2,13 +2,14 @@
 ####
 # shyny app for rythm metrics computing and display
 ####
-library(shiny)
-library(readtextgrid)
-library(ggplot2)
-library(dplyr)
-library(gridExtra)
-library(factoextra)
-library(FactoMineR)
+library("shiny")
+#library("readtextgrid")
+library("AcousticNDLCodeR")
+library("ggplot2")
+library("dplyr")
+library("gridExtra")
+library("factoextra")
+library("FactoMineR")
 
 
 options(shiny.maxRequestSize=30*1024^2) 
@@ -30,7 +31,7 @@ server <- function(input, output) {
         #df <- read_textgrid(input$file1$datapath[1])
         nFiles<- length(input$file1$datapath)
         files<- input$file1$datapath
-        
+        print(files)
         df<- data.frame("file"= c(1:length(files)),"speechRate"=c(1:length(files)),"PerV"=c(1:length(files)),"PerC"=c(1:length(files)),"VarcoV"=c(1:length(files)),"VarcoC"=c(1:length(files)),"DeltaV"=c(1:length(files)),"DeltaC"=c(1:length(files)),"VrPVI"=c(1:length(files)), "CrPVI"=c(1:length(files)),"VnPVI"=c(1:length(files)),"speechTimeSecs"=c(1:length(files)) )
         allC <- data.frame("file"=character(0),"durationC"=numeric(0))
         allV <- data.frame("file"=character(0),"durationA"=numeric(0))
@@ -40,19 +41,50 @@ server <- function(input, output) {
           #for (file in files) {
           #loopIndex=loopIndex+1
           #textgrid<- read_textgrid(file)
-          textgrid<- read_textgrid(files[loopIndex])
+          #a= readTextGridRobust("/Users/weg/Desktop/Alpasarlabarca.TextGrid", "UTF-8")
+          #textgrid<- read_textgrid(files[loopIndex])
+          filetoRead <- files[loopIndex]
+          #print(filetoRead)
+          textgrid <- tryCatch(
+            expr = {
+              textgrid <- readTextGridRobust(filetoRead, "UTF-16")[[2]]
+            },
+            error = function(e){
+              # (Optional)
+              # Do this if an error is caught...
+              message("No se puede leer el fichero TextGrid:")
+              message(e)
+              # Choose a return value in case of error
+              
+              textgrid <- readTextGridRobust(filetoRead, "UTF-8")[[2]]
+              return(textgrid)
+            },
+            warning = function(w){
+              # (Optional)
+              # Do this if an warning is caught...
+              message("Error de lectura, probando UTF-8:")
+              message(w)
+              textgrid <- readTextGridRobust(filetoRead, "UTF-8")[[2]]
+              return(textgrid)
+            }
+          )
+          
+          
+          
+          
+          
           fileName<- input$file1$name[loopIndex]
-          textgrid$text[textgrid$text=="PTK"] <- "C"
-          textgrid$text[textgrid$text=="a"] <- "V"
-          textgrid$text[textgrid$text=="c"] <- "C"
-          textgrid$text[textgrid$text=="v"] <- "V"
+          textgrid$Outcomes[textgrid$Outcomes=="PTK"] <- "C"
+          textgrid$Outcomes[textgrid$Outcomes=="a"] <- "V"
+          textgrid$Outcomes[textgrid$Outcomes=="c"] <- "C"
+          textgrid$Outcomes[textgrid$Outcomes=="v"] <- "V"
           #computes dur in ms for comparison purposes with other metrics (Arvaniti 2011)
-          textgrid$duration<-(textgrid$xmax-textgrid$xmin)*1000
-          textGridNonSilent<-textgrid[textgrid$text!="",]
+          textgrid$duration<-(textgrid$end-textgrid$start)*1000
+          textGridNonSilent<-textgrid[textgrid$Outcomes!="",]
           speechTime<-sum(textGridNonSilent$duration)
           
-          durCs <-textgrid[textgrid$text=="C",]$duration
-          durVs <-textgrid[textgrid$text=="V",]$duration
+          durCs <-textgrid[textgrid$Outcomes=="C",]$duration
+          durVs <-textgrid[textgrid$Outcomes=="V",]$duration
           
           dataFileC <- data.frame(rep(fileName, length(durCs)),durCs)
           dataFileV <- data.frame(rep(fileName, length(durVs)),durVs)
@@ -61,20 +93,20 @@ server <- function(input, output) {
           speechTime<-sum(textGridNonSilent$duration)
           
           
-          consonantTime= sum(textgrid[textgrid$text=="C",]$duration)
-          vowelTime= sum(textgrid[textgrid$text=="V",]$duration)
-          frequ= table(textgrid$text)
+          consonantTime= sum(textgrid[textgrid$Outcomes=="C",]$duration)
+          vowelTime= sum(textgrid[textgrid$Outcomes=="V",]$duration)
+          frequ= table(textgrid$Outcomes)
           nCons =unname(frequ[names(frequ)=="C"])
           nVows =unname(frequ[names(frequ)=="V"])
           speechRate= (nCons+nVows)/speechTime
           PercentageV = (vowelTime/speechTime)*100
           PercentageC = (consonantTime/speechTime)*100
-          deltaC <- sd(textgrid[textgrid$text=="C",]$duration)
-          deltaV <- sd(textgrid[textgrid$text=="V",]$duration)
+          deltaC <- sd(textgrid[textgrid$Outcomes=="C",]$duration)
+          deltaV <- sd(textgrid[textgrid$Outcomes=="V",]$duration)
           
           #VarcoC=100*DC/meanC (Dellwo 2006)
-          varcoC=100*deltaC/mean(textgrid[textgrid$text=="C",]$duration)
-          varcoV= 100*deltaV/mean(textgrid[textgrid$text=="V",]$duration)
+          varcoC=100*deltaC/mean(textgrid[textgrid$Outcomes=="C",]$duration)
+          varcoV= 100*deltaV/mean(textgrid[textgrid$Outcomes=="V",]$duration)
           
           
           df[loopIndex,"file" ]<- fileName
@@ -91,8 +123,8 @@ server <- function(input, output) {
           
           #compute the rPVI  FOR VOWELS
           
-          myA<- which(textgrid$text=="V" )
-          myC<- which(textgrid$text=="C")
+          myA<- which(textgrid$Outcomes=="V" )
+          myC<- which(textgrid$Outcomes=="C")
           # Check if all vowel intervals have a C afterwards
           expectedC<- myA+1
           checkingC <- expectedC %in% myC
@@ -114,7 +146,7 @@ server <- function(input, output) {
           # It computes the difference between the duration of each vocalic interval 
           # and the one the follows then divides it by the average duration of all vocalic intervals. 
           # The mean of the values obtained is computed and finally multiplied by 100. 
-          denom<- mean(textgrid$duration[textgrid$text=="V"] )
+          denom<- mean(textgrid$duration[textgrid$Outcomes=="V"] )
           VnPVI<- 100*(mean(difsA/denom))
           df[loopIndex,11]<- VnPVI
           
