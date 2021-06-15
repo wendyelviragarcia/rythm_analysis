@@ -10,4 +10,4 @@
 ## Output
 Numeric values in graphic table  (speech rate -sounds/second., %V, %C, Varco V, Varco C, DeltaV, DeltaC) and graphs.
 
-![image](../rythmApp.png)
+![image](./testFiles/rythmApp.png)
