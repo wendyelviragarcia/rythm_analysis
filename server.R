@@ -41,7 +41,7 @@ server <- function(input, output) {
           #for (file in files) {
           #loopIndex=loopIndex+1
           #textgrid<- read_textgrid(file)
-          #a= readTextGridRobust("/Users/weg/Desktop/Alpasarlabarca.TextGrid", "UTF-8")
+          #textgrid= readTextGridRobust("/Users/weg/Desktop/Alpasarlabarca.TextGrid", "UTF-8")[[2]]
           #textgrid<- read_textgrid(files[loopIndex])
           filetoRead <- files[loopIndex]
           #print(filetoRead)
@@ -80,7 +80,7 @@ server <- function(input, output) {
           textgrid$Outcomes[textgrid$Outcomes=="v"] <- "V"
           #computes dur in ms for comparison purposes with other metrics (Arvaniti 2011)
           textgrid$duration<-(textgrid$end-textgrid$start)*1000
-          textGridNonSilent<-textgrid[textgrid$Outcomes!="",]
+          textGridNonSilent<-textgrid[textgrid$Outcomes=="C"|textgrid$Outcomes=="V",]
           speechTime<-sum(textGridNonSilent$duration)
           
           durCs <-textgrid[textgrid$Outcomes=="C",]$duration
@@ -90,11 +90,9 @@ server <- function(input, output) {
           dataFileV <- data.frame(rep(fileName, length(durVs)),durVs)
           allC<- rbind (dataFileC,allC)
           allV <-rbind (allV,dataFileV)
-          speechTime<-sum(textGridNonSilent$duration)
           
-          
-          consonantTime= sum(textgrid[textgrid$Outcomes=="C",]$duration)
-          vowelTime= sum(textgrid[textgrid$Outcomes=="V",]$duration)
+          consonantTime= sum(durCs)
+          vowelTime= sum(durVs)
           frequ= table(textgrid$Outcomes)
           nCons =unname(frequ[names(frequ)=="C"])
           nVows =unname(frequ[names(frequ)=="V"])
@@ -119,9 +117,9 @@ server <- function(input, output) {
           df[loopIndex,8]<- deltaC
           df[loopIndex,12]<- speechTime/1000
           
-          #compute the rPVI  FOR VOWELS
-          
-          #compute the rPVI  FOR VOWELS
+          ##################
+          # compute the rPVI  FOR VOWELS
+          ##################
           
           myA<- which(textgrid$Outcomes=="V" )
           myC<- which(textgrid$Outcomes=="C")
