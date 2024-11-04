@@ -21,3 +21,8 @@ Thumbs.db
 
 # User-specific files
 .Ruserdata
+
+
+# specific to this project
+PVI_formula.png
+rsconnect
