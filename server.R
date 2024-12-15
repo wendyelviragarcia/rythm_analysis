@@ -10,7 +10,7 @@ library("dplyr")
 library("gridExtra")
 library("factoextra")
 library("FactoMineR")
-
+library("ggpubr")
 
 
 options(shiny.maxRequestSize=30*1024^2) 
@@ -59,6 +59,7 @@ server <- function(input, output) {
               textgrid <- readTextGridRobust(filetoRead, encoding)[[{input$tier}+1]]
               
               textgrid <- as.data.frame(textgrid)
+        # filetoRead = "/Users/weg/Library/CloudStorage/OneDrive-UniversitatdeBarcelona/git-me/rythm_analysis/testFiles/test.TextGrid"
               #filetoRead = "C:/Users/labfonub99/OneDrive - Universitat de Barcelona/git-me/rythm_analysis/textgrid de praat/cat_Arenys_de_Mar.TextGrid"
               #textgrid <- readTextGridRobust(filetoRead, encoding)[[2]]
             },
@@ -90,11 +91,13 @@ server <- function(input, output) {
         
           
           fileName<- input$file1$name[loopIndex]
-          
+          # phonetic
           if (input$annotation == 1){
+            textgrid$Outcomes <- gsub( "<p:>", "", textgrid$Outcomes)
             textgrid$Outcomes <- gsub( "[ ˈˈ̬̞̝̪̟̠̥̃]", "", textgrid$Outcomes)
             textgrid$Outcomes <- gsub( "[^aeoiujwaəεɑɔ]", "C", textgrid$Outcomes)
             textgrid$Outcomes <- gsub( "[aeoiujwəεɑɔ]", "V", textgrid$Outcomes)
+            # orthographic
           } else if (input$annotation == 2){
             textgrid$Outcomes <- gsub( "[h´,.;:]", "", textgrid$Outcomes)
             textgrid$Outcomes <- gsub( "[^aeiou]", "C", textgrid$Outcomes)
@@ -202,6 +205,42 @@ server <- function(input, output) {
         df <- as.data.frame(df)
         df$file<- as.factor(df$file)
         
+        
+        output$downloadData <- downloadHandler(
+          filename = function() {
+            paste("data-rhythm-metrics-", Sys.Date(), ".csv", sep = "")
+          },
+          content = function(file) {
+            write.csv(df, file, row.names = FALSE)
+          }
+        )
+        
+        df_vowel <- allV %>%
+          rename(file = 1) %>%
+          rename(duration = durVs) %>%
+          mutate(type = "vowel")
+        
+        df_consonant <- allC %>%
+          rename(file = 1) %>%
+          rename(duration = durCs) %>%
+          mutate(type = "consonant")
+        
+        # Combine the two datasets
+        combined <- bind_rows(df_vowel, df_consonant)
+        
+        # Combine the data frames
+        #combined <- rbind(allC_c, allV_c)
+        
+        output$downloadDurations <- downloadHandler(
+          filename = function() {
+            paste("data-durations-", Sys.Date(), ".csv", sep = "")
+          },
+          content = function(file) {
+            write.csv(combined, file, row.names = FALSE)
+          }
+        )
+        
+        
         # allC
         # allV
         
@@ -238,6 +277,11 @@ server <- function(input, output) {
           
           
         }
+        
+        
+        
+        
+        
         
         
         df.summary.PV <- df %>%group_by(file) %>%
