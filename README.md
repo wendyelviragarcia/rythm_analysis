@@ -1,4 +1,4 @@
-# Rythm Analysis
+# Rhythm Analysis
  A little shiny app for rhythm metrics computing and display
  
 You can access the app at: [the Shiny page](https://wendyelvira.shinyapps.io/rhythm_analysis/). Beware that is a shinyapp server, if you do not trust shiny to host your files (or they have personal information, are private...), do not upload them. Download this code instead and run it from your computer using RStudio and the shiny package (or use it in a server owned by your university).
