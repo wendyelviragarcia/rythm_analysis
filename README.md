@@ -16,4 +16,4 @@ You can access the app at: [the Shiny page](https://wendyelvira.shinyapps.io/rhy
 Numeric values in graphic table  (speech rate -sounds/second., %V, %C, Varco V, Varco C, DeltaV, DeltaC) and graphs.
 You can also download the duration database that will be created and the rhythm metrics in a csv file.
 
-![image](./testFiles/rythmApp.png)
+![image](./testFiles/rhythmApp.png)
